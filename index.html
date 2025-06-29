@@ -817,13 +817,15 @@
                 return;
             }
 
-            // Normalizar termo de pesquisa
+            // Normalizar e dividir a query em termos (palavras)
             const normalizedQuery = normalizeText(query);
+            const terms = normalizedQuery.split(/\s+/).filter(t => t.length > 0);
 
-            // Pesquisar apenas nos títulos
+            // Pesquisar títulos que contenham todas as palavras
             const results = codes.filter(code => {
                 const normalizedTitle = normalizeText(code.title);
-                return normalizedTitle.includes(normalizedQuery);
+                // Verifica se todas as palavras da query estão no título
+                return terms.every(term => normalizedTitle.includes(term));
             });
 
             // Armazenar no cache
@@ -839,6 +841,7 @@
             currentPage = 0;
             renderCodes(query);
         }
+
 
         // Debounce para otimizar pesquisa
         let searchTimeout;
