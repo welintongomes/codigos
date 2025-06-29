@@ -29,13 +29,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .search-container {
-            padding-top: 15px;
-            padding-left: 50px;
-            position: relative;
-            margin-bottom: 15px;
-        }
-
         .search-input {
             width: 100%;
             padding: 12px 45px 12px 50px;
@@ -52,12 +45,12 @@
 
         .clear-btn {
             position: absolute;
-            right: 2px;
+            right: 10px;
             top: 58.4%;
             transform: translateY(-41%);
             background: none;
             border: none;
-            font-size: 28px;
+            font-size: 32px;
             cursor: pointer;
             padding: 1px 5px;
             border-radius: 20%;
@@ -433,12 +426,60 @@
             border-radius: 8px;
         }
 
+        /* div fixa abaixo para melhorar no celular */
+        .fixed-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            /* Cor de fundo para destacar */
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            /* Sombra para destacar */
+            z-index: 9999;
+            /* Fica por cima de outros elementos */
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-top: 2px;
+            padding-left: 50px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            margin: 0 8px;
+            font-size: 16px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
         @media (max-width: 768px) {
             .scroll-container {
-                max-height: 520px;
+                max-height: 600px;
                 overflow-y: auto;
                 border: 1px solid #ddd;
-                padding: 10px;
+                padding: 3px;
                 background-color: #fafafa;
                 border-radius: 8px;
             }
@@ -453,7 +494,7 @@
                 background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(10px);
                 border-radius: 20px;
-                padding: 14px;
+                padding: 5px;
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             }
         }
@@ -475,21 +516,22 @@
                 </div>
             </div>
         </div>
+        <div class="fixed-bottom-bar">
+            <div class="search-container">
+                <button class="mic-btn" id="micBtn" title="Pesquisar por voz">🎤</button>
+                <input type="text" class="search-input" placeholder="🔍 Pesquisar códigos..." id="searchInput">
+                <button class="clear-btn" id="clearSearch">×</button>
+            </div>
 
-        <div class="search-container">
-            <button class="mic-btn" id="micBtn" title="Pesquisar por voz">🎤</button>
-            <input type="text" class="search-input" placeholder="🔍 Pesquisar códigos..." id="searchInput">
-            <button class="clear-btn" id="clearSearch">×</button>
-        </div>
+            <div class="controls">
 
-        <div class="controls">
+                <button class="btn btn-primary" onclick="openAddModal()">➕ Adicionar</button>
+                <button class="btn btn-secondary" onclick="exportCodes()">📤 Exportar</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📥
+                    Importar</button>
 
-            <button class="btn btn-primary" onclick="openAddModal()">➕ Adicionar</button>
-            <button class="btn btn-secondary" onclick="exportCodes()">📤 Exportar</button>
-            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📥
-                Importar</button>
-
-            <input type="file" id="importFile" class="file-input" accept=".json" onchange="importCodes(event)">
+                <input type="file" id="importFile" class="file-input" accept=".json" onchange="importCodes(event)">
+            </div>
         </div>
 
 
@@ -554,7 +596,7 @@
         // Cache para pesquisas otimizadas
         let searchCache = new Map();
         let virtualizedCodes = [];
-        const ITEMS_PER_PAGE = 6;
+        const ITEMS_PER_PAGE = 5;
         let currentPage = 0;
         let filteredCodes = [];
 
