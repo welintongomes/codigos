@@ -304,10 +304,11 @@
             padding: 15px;
         }
 
-        .pagination .btn {
-            width: 100%;
-            max-width: 200px;
-        }
+.pagination .btn {
+    height: 40px;
+    width: 100%;
+    max-width: 200px;
+}
 
         .page-info {
             font-size: 14px;
@@ -315,9 +316,6 @@
             text-align: center;
             flex: 1;
         }
-
-        /* .pagination .btn {
-        } */
 
 
         /* css para botao de microfone pesquisa rapida */
@@ -387,11 +385,12 @@
             gap: 2px;
             align-items: center;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 10px;
             flex-wrap: wrap;
         }
 
         .page-number.active {
+            height: 45px;
             font-weight: bold;
             background-color: #8044b6;
             color: white;
@@ -409,12 +408,12 @@
         }
 
         #codesList {
-            min-height: 15px;
+            max-height: 393px;
+            min-height: 393px;
         }
 
         .scroll-container {
-            min-height: 470px;
-            max-height: 420px;
+            /* max-height: 429px; */
             overflow-y: auto;
             border: 1px solid #ddd;
             padding: 10px;
@@ -431,7 +430,7 @@
             width: 100%;
             background: #f8f8f8;
             /* Cor de fundo para destacar */
-            padding: 10px;
+            padding: 0px 21px 0px 21px;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
             /* Sombra para destacar */
             z-index: 9999;
@@ -482,7 +481,7 @@
             }
 
             #codesList {
-                min-height: 500px;
+                min-height: 537px;
             }
 
             .container {
@@ -496,7 +495,22 @@
             }
 
             .code-display {
-                max-height: 365px;
+                max-height: 395px;
+            }
+
+            .btn {
+                padding: 3px 3px;
+                font-size: 13px;
+            }
+
+            .pagination .btn {
+                height: 30px;
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .page-number.active {
+                height: 45px;
             }
         }
     </style>
@@ -518,6 +532,8 @@
             </div>
         </div>
         <div class="fixed-bottom-bar">
+            <!-- Aqui vai a paginação fixa -->
+            <div id="paginationContainer" class="pagination-container-fixed"></div>
             <div class="search-container">
                 <button class="mic-btn" id="micBtn" title="Pesquisar por voz">🎤</button>
                 <input type="text" class="search-input" placeholder="🔍 Pesquisar códigos..." id="searchInput">
@@ -730,7 +746,9 @@
                 paginationHTML = `<div class="page-info">${codesToRender.length} código${codesToRender.length !== 1 ? 's' : ''}</div>`;
             }
 
-            codesList.innerHTML = codesHTML + paginationHTML;
+            codesList.innerHTML = codesHTML;
+            document.getElementById('paginationContainer').innerHTML = paginationHTML;
+
         }
 
         // Mudar página
